@@ -11,16 +11,16 @@ private:
 	int level;
 	int state;
 	bool done;
-	vector<Tictac> node;
+	vector<Tictac*> node;
 	vector<char> v;
-
+	bool CheckDone(vector<char> v, char c);
 public:
 
 	Tictac(int m, int l);
 	Tictac(int m);
 	~Tictac();
 	void ReadInput(char* s);
-	void Expand(vector<char> v);
+	void Expand();
 	vector<char> GetVector();
 	void SetVector(vector<char> newV);
 };
