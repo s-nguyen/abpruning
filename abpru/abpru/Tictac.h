@@ -10,18 +10,20 @@ private:
 	int MinMax; //1 means max 0 means min 
 	int level;
 	int state;
-	bool done;
+	bool done; //Terminal Node
 	vector<Tictac*> node;
-	vector<char> v;
-	bool CheckDone(vector<char> v, char c);
+	vector<vector<char>> v;
+	bool CheckDone(vector<vector<char>> v, char c);
+	
 public:
-
+	Tictac();
 	Tictac(int m, int l);
 	Tictac(int m);
 	~Tictac();
 	void ReadInput(char* s);
 	void Expand();
-	vector<char> GetVector();
-	void SetVector(vector<char> newV);
+	vector<vector<char>> GetVector();
+	void SetVector(vector<vector<char>> newV);
+	
 };
 
