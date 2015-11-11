@@ -1,20 +1,21 @@
 #include "Tictac.h"
 
-Tictac::Tictac(int m)
+Tictac::Tictac(string m)
 {
 	this->MinMax = m;
 	this->level = 0;
-	
+	this->done = false;
 }
-Tictac::Tictac(int m, int l)
+Tictac::Tictac(string m, int l)
 {
 	this->MinMax = m;
 	this->level = l;
+	this->done = false;
 	
 }
 Tictac::Tictac()
 {
-
+	this->done = false;
 }
 
 Tictac::~Tictac()
@@ -58,9 +59,53 @@ void Tictac::Expand()
 {
 	for (int i = 0; i < this->v.size(); i++) //tranverse through the current state
 	{
-		for (int j = 0; j < this->v[j].size(); j++)
+		for (int j = 0; j < this->v[i].size(); j++)
 		{
-
+			if (this->done == false)
+			{
+				if (this->v[i][j] == '_')
+				{
+					vector<vector<char>> temp = this->GetVector();
+					if (this->MinMax.compare("Max") == 0) //X's turn place an X
+					{
+						temp[i][j] = 'X';
+						Tictac *t = new Tictac("Min", this->level + 1); //0 Minmax means its O's turn
+						t->SetVector(temp);
+						if (this->CheckDone(t->GetVector(), 'X')) //check if terminal node
+						{
+							t->done = true;
+							this->state = 1;
+						}
+						else
+						{
+							this->state = 0;
+						}
+						this->node.push_back(t);
+						t->Expand();
+					}
+					else if (this->MinMax.compare("Min") == 0) // O's turn to place O
+					{
+						temp[i][j] = 'O';
+						Tictac *t = new Tictac("Max", this->level + 1);
+						t->SetVector(temp);
+						if (this->CheckDone(t->GetVector(), 'O'))
+						{
+							t->done = true;
+							this->state = -1;
+						}
+						else
+						{
+							this->state = 0;
+						}
+						this->node.push_back(t);
+						t->Expand();
+					}
+				}
+			}
+			else
+			{
+				break;
+			}
 		}
 	}
 }
@@ -141,7 +186,18 @@ bool Tictac::CheckDone(vector<vector<char>> v, char c) //checks if there is a Wi
 		}
 	}
 
-
 	return false;
 	
+}
+
+void Tictac::PrintBoard(vector<vector<char>> b)
+{
+	for (int i = 0; i < b.size(); i++)
+	{
+		for (int j = 0; j < b[i].size(); j++)
+		{
+			cout << b[i][j];
+		}
+		cout << endl;
+	}
 }

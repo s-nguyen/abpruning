@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include  <vector>
 #include <string>
 
@@ -7,7 +8,7 @@ class Tictac
 {
 private:
 	
-	int MinMax; //1 means max 0 means min 
+	string MinMax; //1 means max 0 means min 
 	int level;
 	int state;
 	bool done; //Terminal Node
@@ -17,13 +18,14 @@ private:
 	
 public:
 	Tictac();
-	Tictac(int m, int l);
-	Tictac(int m);
+	Tictac(string m, int l);
+	Tictac(string m);
 	~Tictac();
 	void ReadInput(char* s);
 	void Expand();
 	vector<vector<char>> GetVector();
 	void SetVector(vector<vector<char>> newV);
-	
+	void PrintBoard(vector<vector<char>> b);
+
 };
 

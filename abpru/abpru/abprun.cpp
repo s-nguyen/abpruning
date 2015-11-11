@@ -4,9 +4,9 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	Tictac t(1);
+	Tictac t("Max");
 	
-	t.ReadInput(argv[1]);
+	t.ReadInput("OOX_X_OX_");
 
 
 	t.Expand();
