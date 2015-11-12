@@ -2,6 +2,7 @@
 #include <iostream>
 #include  <vector>
 #include <string>
+#include <algorithm>
 
 using namespace std;
 class Tictac
@@ -12,9 +13,12 @@ private:
 	int level;
 	int state;
 	bool done; //Terminal Node
-	vector<Tictac*> node;
+	int gameResults;
+	vector<Tictac*> child;
 	vector<vector<char>> v;
-	bool CheckDone(vector<vector<char>> v, char c);
+	bool CheckDone(vector<vector<char>> vv, char c);
+	bool CheckFullDone(vector<vector<char>> vv);
+	
 	
 public:
 	Tictac();
@@ -26,6 +30,11 @@ public:
 	vector<vector<char>> GetVector();
 	void SetVector(vector<vector<char>> newV);
 	void PrintBoard(vector<vector<char>> b);
-
+	int MiniMax(Tictac* node, int depth, string m, int &c); //Node, depth, maximizingPlayer
+	bool GetDone();
+	int GetState();
+	int GetLevel();
+	int GetMaxLevel(Tictac* node);
+	int AlphaBeta(Tictac* node, int depth, int &a, int &b, string m, int &c, int &aTotal, int &bTotal);
 };
 
