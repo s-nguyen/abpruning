@@ -35,6 +35,6 @@ public:
 	int GetState();
 	int GetLevel();
 	int GetMaxLevel(Tictac* node);
-	int AlphaBeta(Tictac* node, int depth, int &a, int &b, string m, int &c, int &aTotal, int &bTotal);
+	int AlphaBeta(Tictac* node, int depth, int a, int b, string m, int &c, int &aTotal, int &bTotal);
 };
 

@@ -296,9 +296,9 @@ int Tictac::MiniMax(Tictac* node, int depth, string m, int &c)
 	}
 }
 
-int Tictac::AlphaBeta(Tictac* node, int depth, int &a, int &b, string m, int &c, int &aTotal, int &bTotal)
+int Tictac::AlphaBeta(Tictac* node, int depth, int a, int b, string m, int &c, int &aTotal, int &bTotal)
 {
-	int v = -2;
+	int v;
 	c++;
 	if (depth == 0 || node->done == true)
 	{
@@ -306,11 +306,12 @@ int Tictac::AlphaBeta(Tictac* node, int depth, int &a, int &b, string m, int &c,
 	}
 	if (node->MinMax.compare("Max") == 0)
 	{
+		v = -2;
 		for (int i = 0; i < node->child.size(); i++)
 		{
 			v = max(v, AlphaBeta(node->child[i], depth - 1, a, b, "Min", c, aTotal, bTotal));
 			a = max(a, v);
-			if (b <= a)
+			if (b <= a) //fix for single child?
 			{
 				node->PrintBoard(node->GetVector());
 				cout << " Beta cut" << endl << endl;;
