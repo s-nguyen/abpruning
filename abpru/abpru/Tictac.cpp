@@ -304,7 +304,7 @@ int Tictac::AlphaBeta(Tictac* node, int depth, int a, int b, string m, int &c, i
 	{
 		return node->GetState();
 	}
-	if (node->MinMax.compare("Max") == 0)
+	if (node->MinMax.compare("Max") == 0) //maximizer turn
 	{
 		v = -2;
 		for (int i = 0; i < node->child.size(); i++)
@@ -321,7 +321,7 @@ int Tictac::AlphaBeta(Tictac* node, int depth, int a, int b, string m, int &c, i
 		}
 		return v;
 	}
-	else
+	else //Minimizer
 	{
 		v = 2;
 		for (int i = 0; i < node->child.size(); i++)
