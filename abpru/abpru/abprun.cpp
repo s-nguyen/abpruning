@@ -13,6 +13,11 @@ int main(int argc, char* argv[])
 	int bTotal = 0;
 	Tictac *t = new Tictac("Max");
 
+	if (argc != 2){
+		cout << "Usage: .\abpru startstate" << endl;
+		return -1;
+	}
+
 	t->ReadInput(argv[1]);
 	t->Expand();
 	depth = t->GetMaxLevel(t);
