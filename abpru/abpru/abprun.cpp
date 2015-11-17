@@ -36,7 +36,9 @@ int main(int argc, char* argv[])
 
 	cout << "Running with alpha-beta pruning" << endl;
 	moves = 0;
-	state = t->AlphaBeta(t, depth, a, b, "Max", moves, aTotal, bTotal);
+	state = t->AlphaBeta(t, depth, a, b, "Max", moves, aTotal, bTotal, t->getCut());
+
+	t->PrintBoard2();
 
 	cout << "Game Result: " << state << endl;
 	cout << "Moves Considered with alpha-beta pruning: " << moves << endl;

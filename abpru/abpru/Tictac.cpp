@@ -236,19 +236,29 @@ bool Tictac::CheckDone(vector<vector<char>> vv, char c) //checks if there is a W
 	
 }
 
-void Tictac::PrintBoard(vector<vector<char>> b)
+void Tictac::PrintBoard(vector<vector<char>> b, vector<string> &board)
 {
 	for (int i = 0; i < b.size(); i++)
 	{
+		stringstream ss;
+		string line;
 		for (int j = 0; j < b[i].size(); j++)
 		{
-			cout << b[i][j];
+			ss << b[i][j];
 		}
-		if (i + 1 < b.size())
-		{
-			cout << endl;
-		}
+		ss >> line;
+		board.push_back(line);
 	}
+}
+
+void Tictac::PrintBoard2() {
+	for (int i = 0; i < board.size(); i++) {
+		cout << board[i] << endl;
+	}
+}
+
+vector<string> Tictac::getCut() {
+	return board;
 }
 
 int Tictac::GetMaxLevel(Tictac* node)
@@ -296,7 +306,7 @@ int Tictac::MiniMax(Tictac* node, int depth, string m, int &c)
 	}
 }
 
-int Tictac::AlphaBeta(Tictac* node, int depth, int a, int b, string m, int &c, int &aTotal, int &bTotal)
+int Tictac::AlphaBeta(Tictac* node, int depth, int a, int b, string m, int &c, int &aTotal, int &bTotal, vector<string> &board)
 {
 	int v;
 	c++;
@@ -309,12 +319,12 @@ int Tictac::AlphaBeta(Tictac* node, int depth, int a, int b, string m, int &c, i
 		v = -2;
 		for (int i = 0; i < node->child.size(); i++)
 		{
-			v = max(v, AlphaBeta(node->child[i], depth - 1, a, b, "Min", c, aTotal, bTotal));
+			v = max(v, AlphaBeta(node->child[i], depth - 1, a, b, "Min", c, aTotal, bTotal, board));
 			a = max(a, v);
-			if (a == 1 && node->child.size() > 1 && i != node->child.size()-1) //fix for single child? //if a == 1 and more than 1 child
+			if (a == 1) //fix for single child? //if a == 1 and more than 1 child
 			{
-				node->PrintBoard(node->GetVector());
-				cout << " Beta cut" << endl << endl;;
+				node->PrintBoard(node->GetVector(), board);
+				board.push_back("beta cut");
 				bTotal++;
 				break;
 			}
@@ -326,12 +336,12 @@ int Tictac::AlphaBeta(Tictac* node, int depth, int a, int b, string m, int &c, i
 		v = 2;
 		for (int i = 0; i < node->child.size(); i++)
 		{
-			v = min(v, AlphaBeta(node->child[i], depth - 1, a, b, "Max", c, aTotal, bTotal));
+			v = min(v, AlphaBeta(node->child[i], depth - 1, a, b, "Max", c, aTotal, bTotal, board));
 			b = min(b, v);
-			if (b == -1 && node->child.size() > 1 && i != node->child.size() - 1)
+			if (b == -1)
 			{
-				node->PrintBoard(node->GetVector());
-				cout << " Alpha cut" << endl << endl;
+				node->PrintBoard(node->GetVector(), board);
+				board.push_back("alpha cut");
 				aTotal++;
 				break;
 			}
