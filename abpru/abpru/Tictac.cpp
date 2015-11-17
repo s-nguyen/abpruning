@@ -321,7 +321,7 @@ int Tictac::AlphaBeta(Tictac* node, int depth, int a, int b, string m, int &c, i
 		{
 			v = max(v, AlphaBeta(node->child[i], depth - 1, a, b, "Min", c, aTotal, bTotal, board));
 			a = max(a, v);
-			if (a == 1) //fix for single child? //if a == 1 and more than 1 child
+			if (a == 1 && node->child.size() != 1) //fix for single child? //if a == 1 and more than 1 child
 			{
 				node->PrintBoard(node->GetVector(), board);
 				board.push_back("beta cut");
@@ -338,7 +338,7 @@ int Tictac::AlphaBeta(Tictac* node, int depth, int a, int b, string m, int &c, i
 		{
 			v = min(v, AlphaBeta(node->child[i], depth - 1, a, b, "Max", c, aTotal, bTotal, board));
 			b = min(b, v);
-			if (b == -1)
+			if (b == -1 && node->child.size() != 1)
 			{
 				node->PrintBoard(node->GetVector(), board);
 				board.push_back("alpha cut");
