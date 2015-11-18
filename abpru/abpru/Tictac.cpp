@@ -27,12 +27,12 @@ Tictac::~Tictac()
 {
 }
 
-vector<vector<char>> Tictac::GetVector()
+vector<vector<char> > Tictac::GetVector()
 {
 	return this->v;
 }
 
-void Tictac::SetVector(vector<vector<char>> newV)
+void Tictac::SetVector(vector<vector<char> > newV)
 {
 	this->v = newV;
 }
@@ -89,7 +89,7 @@ void Tictac::Expand()
 					if (this->v[i][j] == '_')
 					{
 			
-						vector<vector<char>> temp = this->GetVector();
+						vector<vector<char> > temp = this->GetVector();
 						if (this->MinMax.compare("Max") == 0) //X's turn place an X
 						{
 							
@@ -165,7 +165,7 @@ void Tictac::Expand()
 }
 
 
-bool Tictac::CheckFullDone(vector<vector<char>> vv)
+bool Tictac::CheckFullDone(vector<vector<char> > vv)
 {
 	bool full = true;
 	for (int i = 0; i < vv.size(); i++)
@@ -184,7 +184,7 @@ bool Tictac::CheckFullDone(vector<vector<char>> vv)
 	}
 	return false;
 }
-bool Tictac::CheckDone(vector<vector<char>> vv, char c) //checks if there is a Winner so node stop expanding
+bool Tictac::CheckDone(vector<vector<char> > vv, char c) //checks if there is a Winner so node stop expanding
 {
 	int rowCount = 0;
 	int colCount = 0;
@@ -238,7 +238,7 @@ bool Tictac::CheckDone(vector<vector<char>> vv, char c) //checks if there is a W
 	
 }
 
-void Tictac::PrintBoard(vector<vector<char>> b, vector<string> *board)
+void Tictac::PrintBoard(vector<vector<char> > b, vector<string> *board)
 {
 	for (int i = 0; i < b.size(); i++)
 	{
