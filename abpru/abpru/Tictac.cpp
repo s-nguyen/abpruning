@@ -8,6 +8,7 @@ Tictac::Tictac(string m)
 
 	this->gameResults = 0;
 	this->state = 0;
+	cut = false;
 	b = new vector<string>;
 }
 Tictac::Tictac(string m, int l)
@@ -253,9 +254,48 @@ void Tictac::PrintBoard(vector<vector<char>> b, vector<string> *board)
 }
 
 void Tictac::PrintBoard2() {
+	int skip = 0;
+	int start = 0;
 	for (int i = 0; i < b->size(); i++) {
-		cout << b->at(i) << endl;
+		skip++;
+
+		cout << b->at(i) << " ";
+		if (skip == 4) {
+			cout << endl;
+			skip = 0;
+		}
+		if (skip != 3) {
+			cout << endl;
+		}
+		
+		
 	}
+	//for (int i = 3; i < b->size(); i = i + 4) {
+	//	string text = b->at(i);
+	//	b->erase(b->begin() + i);
+	//	b->at(i - 1).assign(b->at(i - 1) + " " + text);
+	//	i--;
+	//}
+	//for (int i = 0; i < b->size(); i = i + 3) {
+	//	skip++;
+	//	if (skip != 5) {
+	//		cout <<  b->at(i) << std::setw(15);
+	//	}
+	//	else {
+	//		cout << b->at(i);
+	//	}
+	//	
+	//	if (skip == 5) {
+	//		cout << endl;
+	//		skip = 0;
+	//		start++;
+	//		if (start != 3) {
+	//			i = start - 3;
+	//		}
+	//		
+	//	}
+	//}
+	//cout << endl;
 }
 
 vector<string>* Tictac::getCut() {
@@ -327,6 +367,7 @@ int Tictac::AlphaBeta(Tictac* node, int depth, int a, int b, string m, int &c, i
 				node->PrintBoard(node->GetVector(), board);
 				board->push_back("beta cut");
 				bTotal++;
+				node->cut = true;
 				break;
 			}
 		}
@@ -344,7 +385,83 @@ int Tictac::AlphaBeta(Tictac* node, int depth, int a, int b, string m, int &c, i
 				node->PrintBoard(node->GetVector(), board);
 				board->push_back("alpha cut");
 				aTotal++;
+				node->cut = true;
 				break;
+			}
+		}
+		return v;
+	}
+}
+
+int Tictac::Killer(Tictac* node, int depth, int a, int b, string m, int &c, int &aTotal, int &bTotal)
+{
+	int v;
+	bool found = false;
+	c++;
+	if (depth == 0 || node->done == true)
+	{
+		return node->GetState();
+	}
+	if (node->MinMax.compare("Max") == 0) //maximizer turn
+	{
+		v = -2;
+		for (int i = 0; i < node->child.size(); i++)
+		{
+			if (node->child[i]->cut == true) {
+				found = true;
+				v = max(v, Killer(node->child[i], depth - 1, a, b, "Min", c, aTotal, bTotal));
+				a = max(a, v);
+				if (a == 1 && node->child.size() != 1) 
+				{
+					//node->PrintBoard(node->GetVector(), board);
+					//board->push_back("beta cut");
+					bTotal++;
+					node->cut = true;
+					break;
+				}
+			}
+		}
+		if (!found) {
+			for (int i = 0; i < node->child.size(); i++) {
+				v = max(v, Killer(node->child[i], depth - 1, a, b, "Min", c, aTotal, bTotal));
+				a = max(a, v);
+				if (a == 1 && node->child.size() != 1) 
+				{
+					bTotal++;
+					node->cut = true;
+					break;
+				}
+			}
+		}
+		return v;
+	}
+	else //Minimizer
+	{
+		v = 2;
+		for (int i = 0; i < node->child.size(); i++)
+		{
+			if (node->child[i]->cut == true) {
+				found = true;
+				v = min(v, Killer(node->child[i], depth - 1, a, b, "Max", c, aTotal, bTotal));
+				b = min(b, v);
+				if (b == -1 && node->child.size() != 1)
+				{
+					aTotal++;
+					node->cut = true;
+					break;
+				}
+			}
+		}
+		if (!found) {
+			for (int i = 0; i < node->child.size(); i++) {
+				v = min(v, Killer(node->child[i], depth - 1, a, b, "Max", c, aTotal, bTotal));
+				b = min(b, v);
+				if (b == -1 && node->child.size() != 1)
+				{
+					aTotal++;
+					node->cut = true;
+					break;
+				}
 			}
 		}
 		return v;

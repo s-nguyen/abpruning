@@ -4,6 +4,7 @@
 #include <string>
 #include <algorithm>
 #include <sstream>
+#include <iomanip>
 
 using namespace std;
 class Tictac
@@ -39,5 +40,7 @@ public:
 	int AlphaBeta(Tictac* node, int depth, int a, int b, string m, int &c, int &aTotal, int &bTotal, vector<string> *board);
 	void PrintBoard2();
 	vector<string> *getCut();
+	int Killer(Tictac* node, int depth, int a, int b, string m, int &c, int &aTotal, int &bTotal);
+	bool cut;
 };
 

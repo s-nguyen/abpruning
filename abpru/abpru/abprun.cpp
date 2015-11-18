@@ -11,6 +11,7 @@ int main(int argc, char* argv[])
 	int b = 2;
 	int aTotal = 0;
 	int bTotal = 0;
+	int oldmoves = 0;
 	Tictac *t = new Tictac("Max");
 
 	if (argc != 2){
@@ -24,26 +25,48 @@ int main(int argc, char* argv[])
 
 	if (!t->GetDone())
 	{
-		state = t->MiniMax(t, depth, "Max", moves);
+		state = t->MiniMax(t, depth, "Max", oldmoves);
 	}
-
-	cout << argv[0] << " " << argv[1] << endl << endl;
-	cout << "Running without alpha-beta pruning" << endl;
-	cout << "Game Result: " << state << endl;
-	cout << "Moves considered without alpha-beta pruning: " << moves << endl << endl;
-
-	cout << "------------------------------------------------" << endl << endl;
-
-	cout << "Running with alpha-beta pruning" << endl;
+	
+	
 	moves = 0;
+	
 	state = t->AlphaBeta(t, depth, a, b, "Max", moves, aTotal, bTotal, t->getCut());
 
 	t->PrintBoard2();
 
+	cout << argv[0] << " " << argv[1] << endl << endl;
+	cout << "Running without alpha-beta pruning" << endl;
+	cout << "Game Result: " << state << endl;
+	cout << "Moves considered without alpha-beta pruning: " << oldmoves << endl << endl;
+
+	cout << "------------------------------------------------" << endl << endl;
+
+	cout << "Running with alpha-beta pruning" << endl;
+	
 	cout << "Game Result: " << state << endl;
 	cout << "Moves Considered with alpha-beta pruning: " << moves << endl;
 	cout << "Alpha cuts: " << aTotal << endl;
 	cout << "Beta cuts: " << bTotal << endl;
+	cout << endl;
+
+	cout << "------------------------------------------------" << endl << endl;
+	moves = 0;
+
+	a = -2;
+	b = 2;
+	aTotal = 0;
+	bTotal = 0;
+	state = t->Killer(t, depth, a, b, "Max", moves, aTotal, bTotal);
+
+	cout << "Running with Killer Heuristic" << endl;
+	cout << "Game Result: " << state << endl;
+	cout << "Moves Considered with alpha-beta pruning: " << moves << endl;
+	cout << "Alpha cuts: " << aTotal << endl;
+	cout << "Beta cuts: " << bTotal << endl;
+
+	cout << endl;
+
 
 	return 0;
 }
