@@ -11,11 +11,11 @@ int main(int argc, char* argv[])
 	int b = 2;
 	int aTotal = 0;
 	int bTotal = 0;
-	int oldmoves = 0;
+	int oldmoves = -1;
 	Tictac *t = new Tictac("Max");
 
 	if (argc != 2){
-		cout << "Usage: .\abpru startstate" << endl;
+		cout << "Usage: ./abpru startstate" << endl;
 		return -1;
 	}
 
@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 	}
 	
 	
-	moves = 0;
+	moves = -1;
 	
 	state = t->AlphaBeta(t, depth, a, b, "Max", moves, aTotal, bTotal, t->getCut());
 
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 	cout << endl;
 
 	cout << "------------------------------------------------" << endl << endl;
-	moves = 0;
+	moves = -1;
 
 	a = -2;
 	b = 2;

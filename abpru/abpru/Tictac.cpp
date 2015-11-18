@@ -393,10 +393,12 @@ int Tictac::AlphaBeta(Tictac* node, int depth, int a, int b, string m, int &c, i
 	}
 }
 
+
+
+
 int Tictac::Killer(Tictac* node, int depth, int a, int b, string m, int &c, int &aTotal, int &bTotal)
 {
 	int v;
-	bool found = false;
 	c++;
 	if (depth == 0 || node->done == true)
 	{
@@ -408,28 +410,27 @@ int Tictac::Killer(Tictac* node, int depth, int a, int b, string m, int &c, int 
 		for (int i = 0; i < node->child.size(); i++)
 		{
 			if (node->child[i]->cut == true) {
-				found = true;
-				v = max(v, Killer(node->child[i], depth - 1, a, b, "Min", c, aTotal, bTotal));
+				c++;
+				v = (v, node->child[i]->GetState());
 				a = max(a, v);
-				if (a == 1 && node->child.size() != 1) 
+				if (a == 1 && node->child.size() != 1)
 				{
 					//node->PrintBoard(node->GetVector(), board);
 					//board->push_back("beta cut");
 					bTotal++;
-					node->cut = true;
+					//return node->GetState();
 					break;
 				}
 			}
-		}
-		if (!found) {
-			for (int i = 0; i < node->child.size(); i++) {
+			else{
 				v = max(v, Killer(node->child[i], depth - 1, a, b, "Min", c, aTotal, bTotal));
 				a = max(a, v);
-				if (a == 1 && node->child.size() != 1) 
+				if (a == 1 && node->child.size() != 1)
 				{
+					//node->PrintBoard(node->GetVector(), board);
+					//board->push_back("beta cut");
 					bTotal++;
-					node->cut = true;
-					break;
+					return v;
 				}
 			}
 		}
@@ -441,25 +442,22 @@ int Tictac::Killer(Tictac* node, int depth, int a, int b, string m, int &c, int 
 		for (int i = 0; i < node->child.size(); i++)
 		{
 			if (node->child[i]->cut == true) {
-				found = true;
-				v = min(v, Killer(node->child[i], depth - 1, a, b, "Max", c, aTotal, bTotal));
+				c++;
+				v = min(v, node->child[i]->GetState());
 				b = min(b, v);
 				if (b == -1 && node->child.size() != 1)
 				{
 					aTotal++;
-					node->cut = true;
 					break;
+					//return node->GetState();
 				}
 			}
-		}
-		if (!found) {
-			for (int i = 0; i < node->child.size(); i++) {
+			else{
 				v = min(v, Killer(node->child[i], depth - 1, a, b, "Max", c, aTotal, bTotal));
 				b = min(b, v);
 				if (b == -1 && node->child.size() != 1)
 				{
 					aTotal++;
-					node->cut = true;
 					break;
 				}
 			}
