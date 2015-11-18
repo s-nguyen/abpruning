@@ -8,6 +8,7 @@ Tictac::Tictac(string m)
 
 	this->gameResults = 0;
 	this->state = 0;
+	b = new vector<string>;
 }
 Tictac::Tictac(string m, int l)
 {
@@ -236,7 +237,7 @@ bool Tictac::CheckDone(vector<vector<char>> vv, char c) //checks if there is a W
 	
 }
 
-void Tictac::PrintBoard(vector<vector<char>> b, vector<string> &board)
+void Tictac::PrintBoard(vector<vector<char>> b, vector<string> *board)
 {
 	for (int i = 0; i < b.size(); i++)
 	{
@@ -247,18 +248,18 @@ void Tictac::PrintBoard(vector<vector<char>> b, vector<string> &board)
 			ss << b[i][j];
 		}
 		ss >> line;
-		board.push_back(line);
+		board->push_back(line);
 	}
 }
 
 void Tictac::PrintBoard2() {
-	for (int i = 0; i < board.size(); i++) {
-		cout << board[i] << endl;
+	for (int i = 0; i < b->size(); i++) {
+		cout << b->at(i) << endl;
 	}
 }
 
-vector<string> Tictac::getCut() {
-	return board;
+vector<string>* Tictac::getCut() {
+	return this->b;
 }
 
 int Tictac::GetMaxLevel(Tictac* node)
@@ -306,7 +307,7 @@ int Tictac::MiniMax(Tictac* node, int depth, string m, int &c)
 	}
 }
 
-int Tictac::AlphaBeta(Tictac* node, int depth, int a, int b, string m, int &c, int &aTotal, int &bTotal, vector<string> &board)
+int Tictac::AlphaBeta(Tictac* node, int depth, int a, int b, string m, int &c, int &aTotal, int &bTotal, vector<string> *board)
 {
 	int v;
 	c++;
@@ -324,7 +325,7 @@ int Tictac::AlphaBeta(Tictac* node, int depth, int a, int b, string m, int &c, i
 			if (a == 1 && node->child.size() != 1) //fix for single child? //if a == 1 and more than 1 child
 			{
 				node->PrintBoard(node->GetVector(), board);
-				board.push_back("beta cut");
+				board->push_back("beta cut");
 				bTotal++;
 				break;
 			}
@@ -341,7 +342,7 @@ int Tictac::AlphaBeta(Tictac* node, int depth, int a, int b, string m, int &c, i
 			if (b == -1 && node->child.size() != 1)
 			{
 				node->PrintBoard(node->GetVector(), board);
-				board.push_back("alpha cut");
+				board->push_back("alpha cut");
 				aTotal++;
 				break;
 			}
