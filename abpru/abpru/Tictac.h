@@ -17,9 +17,9 @@ private:
 	bool done; //Terminal Node
 	int gameResults;
 	vector<Tictac*> child;
-	vector<vector<char>> v;
-	bool CheckDone(vector<vector<char>> vv, char c);
-	bool CheckFullDone(vector<vector<char>> vv);
+	vector<vector<char> > v;
+	bool CheckDone(vector<vector<char> > vv, char c);
+	bool CheckFullDone(vector<vector<char> > vv);
 	vector<string> *b;
 	
 public:
@@ -30,8 +30,8 @@ public:
 	void ReadInput(char* s);
 	void Expand();
 	vector<vector<char>> GetVector();
-	void SetVector(vector<vector<char>> newV);
-	void PrintBoard(vector<vector<char>> b, vector<string> *board);
+	void SetVector(vector<vector<char> > newV);
+	void PrintBoard(vector<vector<char> > b, vector<string> *board);
 	int MiniMax(Tictac* node, int depth, string m, int &c); //Node, depth, maximizingPlayer
 	bool GetDone();
 	int GetState();
