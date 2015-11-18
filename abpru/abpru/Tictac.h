@@ -29,7 +29,7 @@ public:
 	~Tictac();
 	void ReadInput(char* s);
 	void Expand();
-	vector<vector<char>> GetVector();
+	vector<vector<char> > GetVector();
 	void SetVector(vector<vector<char> > newV);
 	void PrintBoard(vector<vector<char> > b, vector<string> *board);
 	int MiniMax(Tictac* node, int depth, string m, int &c); //Node, depth, maximizingPlayer
